@@ -7,6 +7,13 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\RamuanController;
 use App\Http\Controllers\TanamanController;
 use App\Http\Controllers\TipsController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\PesananController;
+use App\Http\Controllers\DetailPesananController;
+use App\Http\Controllers\AlamatPengirimanController;
+use App\Http\Controllers\FavoritController;
+use App\Http\Controllers\PembayaranController;
+use App\Http\Controllers\UlasanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,3 +99,60 @@ Route::post('tips_sehat/store', [TipsController::class, 'storeTips'])->name('tip
 Route::get('/tips_sehat/{id_tips}/edit', [TipsController::class, 'editTips'])->name('tips.edit');
 Route::put('/tips_sehat/{id_tips}', [TipsController::class, 'updateTips'])->name('tips.update');
 Route::delete('/tips_sehat/{id_tips}', [TipsController::class, 'destroyTips'])->name('tips.destroy');
+
+
+// ================ keranjang ================== //
+Route::get('keranjang', [KeranjangController::class, 'indexKeranjang']);
+Route::post('keranjang', [KeranjangController::class, 'storeKeranjang']);
+Route::delete('keranjang/{id_keranjang}', [KeranjangController::class, 'destroyKeranjang']);
+
+
+
+Route::get('/pesanan', [PesananController::class, 'indexPesanan'])->name('pesanan.index');
+Route::get('/tambah_pesanan', [PesananController::class, 'createPesanan'])->name('pesanan.create');
+Route::post('pesanan/store', [PesananController::class, 'storePesanan'])->name('pesanan.store');
+Route::get('/pesanan/{id_pesanan}/edit', [PesananController::class, 'editPesanan'])->name('pesanan.edit');
+Route::put('/pesanan/{id_pesanan', [PesananController::class, 'updatePesanan'])->name('pesanan.update');
+Route::delete('/pesanan/{id_pesanan}', [PesananController::class, 'destroyPesanan'])->name('pesanan.destroy');
+
+
+// ================ Detail pesanan ================== //
+Route::get('/detail-pesanan', [DetailPesananController::class, 'indexDetailPesanan']);
+Route::get('/detail-pesanan/create', [DetailPesananController::class, 'createDetailPesanan']);
+Route::post('/detail-pesanan', [DetailPesananController::class, 'storeDetailPesanan']);
+Route::get('/detail-pesanan/{id}/edit', [DetailPesananController::class, 'editDetailPesanan']);
+Route::put('/detail-pesanan/{id}', [DetailPesananController::class, 'updateDetailPesanan']);
+Route::delete('/detail-pesanan/{id}', [DetailPesananController::class, 'destroyDetailPesanan']);
+
+
+// ================ Alamat Pengiriman ================== //
+Route::get('/alamat-pengiriman', [AlamatPengirimanController::class, 'indexAlamatPengiriman']);
+Route::get('/alamat-pengiriman/create', [AlamatPengirimanController::class, 'createAlamatPengiriman']);
+Route::post('/alamat-pengiriman', [AlamatPengirimanController::class, 'storeAlamatPengiriman']);
+Route::get('/alamat-pengiriman/{id_pengiriman}/edit', [AlamatPengirimanController::class, 'editAlamatPengiriman']);
+Route::put('/alamat-pengiriman/{id_pengiriman}', [AlamatPengirimanController::class, 'updateAlamatPengiriman']);
+Route::delete('/alamat-pengiriman/{id_pengiriman}', [AlamatPengirimanController::class, 'destroyAlamatPengiriman']);
+
+// ================ Pembayaran ================== //
+Route::get('/pembayaran', [PembayaranController::class, 'indexPembayaran']);
+Route::get('/pembayaran/create', [PembayaranController::class, 'createPembayaran']);
+Route::post('/pembayaran', [PembayaranController::class, 'storePembayaran']);
+Route::get('/pembayaran/{id_pembayaran}/edit', [PembayaranController::class, 'editPembayaran']);
+Route::put('/pembayaran/{id_pembayaran}', [PembayaranController::class, 'updatePembayaran']);
+Route::delete('/pembayaran/{id_pembayaran}', [PembayaranController::class, 'destroyPembayaran']);
+
+// ================ Favorit ================== //
+Route::get('/favorit', [FavoritController::class, 'indexFavorit']);
+Route::get('/favorit/create', [FavoritController::class, 'createFavorit']);
+Route::post('/favorit', [FavoritController::class, 'storeFavorit']);
+Route::get('/favorit/{id_favorit}/edit', [FavoritController::class, 'editFavorit']);
+Route::put('/favorit/{id_favorit}', [FavoritController::class, 'updateFavorit']);
+Route::delete('/favorit/{id_favorit}', [FavoritController::class, 'destroyFavorit']);
+
+// ================ Ulasan ================== //
+Route::get('/ulasan', [UlasanController::class, 'indexUlasan']);
+Route::get('/ulasan/create', [UlasanController::class, 'createUlasan']);
+Route::post('/ulasan', [UlasanController::class, 'storeUlasan']);
+Route::get('/ulasan/{id_ulasan}/edit', [UlasanController::class, 'editUlasan']);
+Route::put('/ulasan/{id_ulasan}', [UlasanController::class, 'updateUlasan']);
+Route::delete('/ulasan/{id_ulasan}', [UlasanController::class, 'destroyUlasan']);

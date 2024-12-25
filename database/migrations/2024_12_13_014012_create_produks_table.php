@@ -19,14 +19,17 @@ class CreateProduksTable extends Migration
             $table->string('nama_produk');
             $table->string('harga');
             $table->string('gambar');
+            $table->integer('stock')->default(0); // Menambahkan kolom stock
             $table->text('deskripsi');
             $table->text('manfaat');
             $table->text('efekSamping');
             $table->text('waktuKonsumsi');
+            $table->timestamps(); // Menambahkan created_at dan updated_at secara otomatis
 
+            // Foreign key untuk kategori
             $table->foreign('id_kategori')->references('id_kategori')->on('kategori')
-            ->onUpdate('cascade') // Update foreign key jika parent berubah
-            ->onDelete('cascade');
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

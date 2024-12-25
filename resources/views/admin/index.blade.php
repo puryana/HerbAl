@@ -42,7 +42,16 @@
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title">Customers</span>
+                        <span class="title">Pelanggan</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="#" onclick="loadContent('pesanan')">
+                        <span class="icon">
+                            <ion-icon name="cart-outline"></ion-icon>
+                        </span>
+                        <span class="title">Pesanan</span>
                     </a>
                 </li>
 
@@ -60,7 +69,7 @@
                         <span class="icon">
                             <ion-icon name="cube-outline"></ion-icon>
                         </span>
-                        <span class="title">Produk</span>
+                        <span class="title">Produk Herbal</span>
                     </a>
                 </li>
 
@@ -144,6 +153,7 @@
 
     <!-- =========== Scripts =========  -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/pesanan.js') }}"></script>
     <script src="{{ asset('assets/js/kategori.js') }}"></script>
     <script src="{{ asset('assets/js/produk.js') }}"></script>
     <script src="{{ asset('assets/js/tanaman_obat.js') }}"></script>

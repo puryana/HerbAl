@@ -32,6 +32,7 @@ class ProdukController extends Controller
                 'nama_produk' => 'required|string|max:255',
                 'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048', 
                 'harga' => 'required|string',
+                'stock' => 'required|integer|min:0',
                 'deskripsi' => 'required|string',
                 'manfaat' => 'required|string',
                 'efekSamping' => 'required|string', 
@@ -43,6 +44,7 @@ class ProdukController extends Controller
             $produk->id_kategori = $validated['id_kategori'];
             $produk->nama_produk = $validated['nama_produk'];
             $produk->harga = $validated['harga'];
+            $produk->stock = $validated['stock'];
             $produk->deskripsi = $validated['deskripsi'];
             $produk->manfaat = $validated['manfaat'];
             $produk->efekSamping = $validated['efekSamping'];
@@ -91,6 +93,7 @@ class ProdukController extends Controller
                 'nama_produk' => 'required|string|max:255',
                 'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', 
                 'harga' => 'required|string',
+                'stock' => 'required|integer|min:0',
                 'deskripsi' => 'required|string',
                 'manfaat' => 'required|string',
                 'efekSamping' => 'required|string', 
@@ -104,6 +107,7 @@ class ProdukController extends Controller
             $produk->id_kategori = $request->input('id_kategori');
             $produk->nama_produk = $request->input('nama_produk');
             $produk->harga = $request->input('harga');
+            $produk->stock = $request->input('stock');
             $produk->deskripsi = $request->input('deskripsi');
             $produk->manfaat = $request->input('manfaat');
             $produk->efekSamping = $request->input('efekSamping');

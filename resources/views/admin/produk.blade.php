@@ -29,6 +29,7 @@
                         <td>Nama Produk</td>
                         <td>Gambar</td>
                         <td>Harga</td>
+                        <td>Stok</td>
                         <td>Obsi</td>
                     </tr>
                 </thead>
@@ -43,6 +44,7 @@
                                 style="width: 50px; height: auto;">
                         </td>
                         <td>Rp {{ number_format($produk->harga, 0, ',', '.') }}</td>
+                        <td>{{ $produk->stock}}</td>
                         <td>
                             <!-- Tombol Edit -->
                             <a href="#" class="btn-edit" onclick="loadContent('{{ route('produk.edit', $produk->id_produk) }}')">Edit</a>

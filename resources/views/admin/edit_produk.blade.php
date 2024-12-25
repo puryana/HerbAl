@@ -69,12 +69,25 @@
                 <div class="form-group">
                     <label for="harga">Harga Produk</label>
                     <input 
-                    type="text" 
+                    type="number" 
                     id="harga" 
                     name="harga" 
                     value="{{ old('harga', $produk->harga) }}" 
                     required>
                 </div><br>
+
+                <!-- Stok -->
+                <div class="form-group">
+                    <label for="stok">Stok Produk</label>
+                    <input 
+                        type="number" 
+                        id="stock" 
+                        name="stock" 
+                        value="{{ old('stock', $produk->stock) }}" 
+                        required 
+                        min="0">
+                </div><br>
+
                 
                 <!-- Deskripsi -->
                 <div class="form-group">
@@ -127,8 +140,8 @@
                 <!-- Tombol Aksi -->
                 <button class="btn-add-back" type="button" onclick="loadContent('produk')">Kembali</button>
                 <div class="form-actions">
-                    <button type="submit" class="btn-simpan">Simpan</button>
-                    {{-- <button type="submit" class="btn-simpan" onclick="return setupEditProdukListener(this)">Simpan</button> --}}
+                    {{-- <button type="submit" class="btn-simpan">Simpan</button> --}}
+                    <button type="submit" class="btn-simpan" onclick="return setupEditProdukListener(this)">Simpan</button>
                 </div>
             </form>
         </div>

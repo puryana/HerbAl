@@ -1,12 +1,21 @@
 <?php
 
+use App\Http\Controllers\Api\AlamatPengirimanApiController;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\Api\DetailPesananApiController;
+use App\Http\Controllers\Api\FavoritApiController;
 use App\Http\Controllers\API\KategoriApiController;
+use App\Http\Controllers\Api\KeranjangApiController;
+use App\Http\Controllers\Api\PembayaranApiController;
 use App\Http\Controllers\API\PenyakitApiController;
+use App\Http\Controllers\Api\PesananApiController;
 use App\Http\Controllers\API\ProdukApiController;
 use App\Http\Controllers\API\RamuanApiController;
 use App\Http\Controllers\API\TanamanApiController;
 use App\Http\Controllers\API\TipsApiController;
+use App\Http\Controllers\Api\UlasanApiController;
+use App\Http\Controllers\API\UserApiController;
+use App\Http\Controllers\KeranjangController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +28,11 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+// ========================== User API ================================ //
+Route::prefix('user')->group(function () {
+    Route::post('/login-with-uid', [UserApiController::class, 'loginWithUID'])->name('api.user.loginWithUID');
+});
 
 // =========================== Login dan Logout ============================= //
 Route::post('/login', [AuthController::class, 'login'])->name('api.login');
@@ -76,4 +90,67 @@ Route::prefix('tips')->group(function () {
     Route::get('/{id}', [TipsApiController::class, 'edit'])->name('api.tips.edit');
     Route::put('/{id}', [TipsApiController::class, 'update'])->name('api.tips.update');
     Route::delete('/{id}', [TipsApiController::class, 'destroy'])->name('api.tips.destroy');
+});
+
+// ================ keranjang API ================== //
+Route::prefix('keranjang')->group(function () {
+    Route::get('/', [KeranjangApiController::class, 'index'])->name('api.keranjang.index'); 
+    Route::post('/', [KeranjangApiController::class, 'store'])->name('api.keranjang.store'); 
+    Route::get('/user/{id}', [KeranjangApiController::class, 'showByUser'])->name('api.keranjang.showByUser'); 
+    Route::put('/{id}', [KeranjangApiController::class, 'update'])->name('api.keranjang.update'); 
+    Route::delete('/{id}', [KeranjangApiController::class, 'destroy'])->name('api.keranjang.destroy'); 
+});
+
+// ========================== Pesanan API ================================ //
+Route::prefix('pesanan')->group(function () {
+    Route::get('/', [PesananApiController::class, 'index'])->name('api.pesanan.index');
+    Route::post('/', [PesananApiController::class, 'store'])->name('api.pesanan.store');
+    Route::get('/{id}', [PesananApiController::class, 'edit'])->name('api.pesanan.edit');
+    Route::put('/{id}', [PesananApiController::class, 'update'])->name('api.pesanan.update');
+    Route::delete('/{id}', [PesananApiController::class, 'destroy'])->name('api.pesanan.destroy');
+});
+
+// ========================== Detail Pesanan API ================================ //
+Route::prefix('detail-pesanan')->group(function () {
+    Route::get('/', [DetailPesananApiController::class, 'index'])->name('api.detail-pesanan.index');
+    Route::post('/', [DetailPesananApiController::class, 'store'])->name('api.detail-pesanan.store');
+    Route::get('/{id}', [DetailPesananApiController::class, 'show'])->name('api.detail-pesanan.show');
+    Route::put('/{id}', [DetailPesananApiController::class, 'update'])->name('api.detail-pesanan.update');
+    Route::delete('/{id}', [DetailPesananApiController::class, 'destroy'])->name('api.detail-pesanan.destroy');
+});
+
+// ========================== Alamat Pengiriman API ================================ //
+Route::prefix('alamat-pengiriman')->group(function () {
+    Route::get('/', [AlamatPengirimanApiController::class, 'index'])->name('api.alamat-pengiriman.index');
+    Route::post('/', [AlamatPengirimanApiController::class, 'store'])->name('api.alamat-pengiriman.store');
+    Route::get('/{id}', [AlamatPengirimanApiController::class, 'show'])->name('api.alamat-pengiriman.show');
+    Route::put('/{id}', [AlamatPengirimanApiController::class, 'update'])->name('api.alamat-pengiriman.update');
+    Route::delete('/{id}', [AlamatPengirimanApiController::class, 'destroy'])->name('api.alamat-pengiriman.destroy');
+});
+
+// ========================== pembayaran API ================================ //
+Route::prefix('pembayaran')->group(function () {
+    Route::get('/', [PembayaranApiController::class, 'index'])->name('api.pembayaran.index');
+    Route::post('/', [PembayaranApiController::class, 'store'])->name('api.pembayaran.store');
+    Route::get('/{id}', [PembayaranApiController::class, 'show'])->name('api.pembayaran.show');
+    Route::put('/{id}', [PembayaranApiController::class, 'update'])->name('api.pembayaran.update');
+    Route::delete('/{id}', [PembayaranApiController::class, 'destroy'])->name('api.pembayaran.destroy');
+});
+
+// ========================== Favorit API ================================ //
+Route::prefix('favorit')->group(function () {
+    Route::get('/', [FavoritApiController::class, 'index'])->name('api.favorit.index');
+    Route::post('/', [FavoritApiController::class, 'store'])->name('api.favorit.store');
+    Route::get('/{id}', [FavoritApiController::class, 'show'])->name('api.favorit.show');
+    Route::put('/{id}', [FavoritApiController::class, 'update'])->name('api.favorit.update');
+    Route::delete('/{id}', [FavoritApiController::class, 'destroy'])->name('api.favorit.destroy');
+});
+
+// ========================== Ulasan API ================================ //
+Route::prefix('ulasan')->group(function () {
+    Route::get('/', [UlasanApiController::class, 'index'])->name('api.ulasan.index');
+    Route::post('/', [UlasanApiController::class, 'store'])->name('api.ulasan.store');
+    Route::get('/{id}', [UlasanApiController::class, 'show'])->name('api.ulasan.show');
+    Route::put('/{id}', [UlasanApiController::class, 'update'])->name('api.ulasan.update');
+    Route::delete('/{id}', [UlasanApiController::class, 'destroy'])->name('api.ulasan.destroy');
 });

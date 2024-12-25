@@ -17,13 +17,14 @@ class Produk extends Model
         'nama_produk',
         'harga',
         'gambar',
+        'stock',
         'deskripsi',
         'manfaat',
         'efekSamping',
         'waktuKonsumsi',
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function kategori()
     {

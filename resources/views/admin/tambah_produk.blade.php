@@ -43,7 +43,12 @@
 
                 <div class="form-group">
                     <label for="harga">Harga Produk</label>
-                    <input type="text" id="harga" name="harga" placeholder="Masukkan Harga Produk" required>
+                    <input type="number" id="harga" name="harga" placeholder="Masukkan Harga Produk" required>
+                </div><br>
+
+                <div class="form-group">
+                    <label for="stock">Stok Produk</label>
+                    <input type="number" id="stock" name="stock" placeholder="Masukkan Stok Produk" required min="0">
                 </div><br>
 
                 <div class="form-group">
@@ -69,7 +74,7 @@
                 <button class="btn-add-back" type="button" onclick="loadContent('produk')">Kembali</button>
 
                 <div class="form-actions">
-                    <button type="submit" class="btn-simpan">Simpan</button>
+                    <button type="submit" class="btn-simpan" onclick="return setupProdukListener(this)">Simpan</button>
                     <button type="reset" class="btn-hapus">Hapus</button>
                 </div>
 
