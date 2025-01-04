@@ -9,35 +9,39 @@ use Illuminate\Http\Request;
 class UserApiController extends Controller
 {
     public function loginWithUID(Request $request)
-{
-    
-    $validated = $request->validate([
-        'uid' => 'required|string',
-        'name' => 'nullable|string',
-        'email' => 'nullable|email',
-    ]);
+    {
+        $validated = $request->validate([
+            'uid' => 'required|string',
+            'name' => 'nullable|string',
+            'email' => 'nullable|email',
+        ]);
 
-    $user = User::where('uid', $validated['uid'])->first();
+        $user = User::where('uid', $validated['uid'])->first();
 
-    if (!$user) {
-        $user = User::create([
-            'uid' => $validated['uid'],
-            'name' => $validated['name'] ?? 'Anonymous',
-            'email' => $validated['email'] ?? null,
-            'password' => bcrypt('firebase_default'),
+        if (!$user) {
+            $user = User::create([
+                'uid' => $validated['uid'],
+                'name' => $validated['name'] ?? 'Anonymous',
+                'email' => $validated['email'] ?? null,
+                'password' => bcrypt('firebase_default'),
+            ]);
+        }
+
+        $token = $user->createToken('flutter_app')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login berhasil',
+            'data' => [
+                'user' => [
+                    'id' => $user->id, 
+                    'uid' => $user->uid,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                ],
+                'token' => $token,
+            ],
         ]);
     }
-
-    $token = $user->createToken('flutter_app')->plainTextToken;
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Login berhasil',
-        'data' => [
-            'user' => $user,
-            'token' => $token,
-        ],
-    ]);
-}
 
 }

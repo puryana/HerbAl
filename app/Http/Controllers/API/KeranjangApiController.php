@@ -20,38 +20,71 @@ class KeranjangApiController extends Controller
         }
     }
 
-    // ===================== STORE ================== //
-    public function store(Request $request)
-    {
-        try {
-            $validated = $request->validate([
-                'id' => 'required|exists:users,id', //id user
-                'id_produk' => 'required|exists:produk,id_produk',
-                'jumlah' => 'required|integer|min:1',
-            ]);
+   // ===================== STORE ================== //
+public function store(Request $request)
+{
+    try {
+        // Validasi input
+        $validated = $request->validate([
+            'id' => 'required|exists:users,id', // id user
+            'id_produk' => 'required|exists:produk,id_produk',
+            'jumlah' => 'required|integer|min:1',
+        ]);
 
+        // Cek apakah produk sudah ada di keranjang untuk user ini
+        $existingKeranjang = Keranjang::where('id', $validated['id'])
+            ->where('id_produk', $validated['id_produk'])
+            ->first();
+
+        if ($existingKeranjang) {
+            // Jika produk sudah ada, tambahkan jumlahnya
+            $existingKeranjang->jumlah += $validated['jumlah'];
+            $existingKeranjang->save();
+
+            return response()->json([
+                'success' => true,
+                'data' => $existingKeranjang,
+                'message' => 'Jumlah item di keranjang berhasil diperbarui',
+            ], 200);
+        } else {
+            // Jika produk belum ada, tambahkan baris baru
             $keranjang = new Keranjang($validated);
             $keranjang->save();
 
-            return response()->json(['success' => true, 'data' => $keranjang, 'message' => 'Item berhasil ditambahkan ke keranjang'], 201);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+            return response()->json([
+                'success' => true,
+                'data' => $keranjang,
+                'message' => 'Item berhasil ditambahkan ke keranjang',
+            ], 201);
         }
+    } catch (\Exception $e) {
+        // Tangani kesalahan
+        return response()->json([
+            'success' => false,
+            'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
+        ], 500);
     }
+}
+
 
     // ===================== SHOW BY USER ================== //
     public function showByUser($id) 
     {
         try {
-            $keranjangs = Keranjang::where('id', $id)->get(); //id_user
-
-            if ($keranjangs->isEmpty()) {
-                return response()->json(['success' => false, 'message' => 'Keranjang kosong atau tidak ditemukan'], 404);
-            }
-
-            return response()->json(['success' => true, 'data' => $keranjangs], 200);
+            // Ambil data keranjang beserta data produk
+            $keranjang = Keranjang::with('produk') // Relasi produk
+                ->where('id', $id) // Filter berdasarkan ID user
+                ->get();
+    
+            return response()->json([
+                'success' => true,
+                'data' => $keranjang
+            ], 200);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+            ], 500);
         }
     }
 
